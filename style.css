@@ -269,7 +269,7 @@ body {
 /* --- ESTADO ABIERTO --- */
 .envelope-wrapper.open {
   animation: none;
-  transform: translateY(150px);
+  transform: translateY(230px);
 }
 
 .envelope-wrapper.open .envelope::before {
@@ -278,13 +278,15 @@ body {
 }
 
 .envelope-wrapper.open .letter {
-  /* Centrada en pantalla, más amplia y por encima del sobre */
-  transform: translate(-50%, -220px);
+  position: fixed;
+  top: 42%;
   left: 50%;
-  width: min(90vw, 480px);
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 500px);
   height: 62vh;
-  max-height: 520px;
-  padding: 25px 22px;
+  max-height: 540px;
+  padding: 22px 20px;
   z-index: 20;
   box-shadow: 0 25px 55px rgba(0, 0, 0, 0.55);
 }
