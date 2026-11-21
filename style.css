@@ -5,8 +5,7 @@
 }
 
 body {
-  /* Fondo de Paisaje de Playa y Atardecer */
-  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,220 +17,150 @@ body {
 
 /* Filtro cálido sobre el paisaje */
 .bg-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, rgba(20, 10, 30, 0.45) 0%, rgba(45, 15, 40, 0.55) 100%);
-  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(25, 12, 35, 0.55) 0%, rgba(75, 25, 45, 0.45) 100%);
   z-index: 1;
+  pointer-events: none;
 }
 
-/* --- ESTILOS DE LAS FOTOS FLOTANTES --- */
+/* Contenedor de fotos flotantes */
 .bg-photos {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  inset: 0;
+  z-index: 2;
   pointer-events: none;
   overflow: hidden;
-  z-index: 2;
 }
 
 .floating-photo {
   position: absolute;
-  bottom: -150px;
-  width: 110px;
-  height: 130px;
+  bottom: -180px;
+  width: 115px;
+  height: 145px;
   object-fit: cover;
-  background: #ffffff;
-  padding: 6px 6px 20px 6px; /* Efecto Polaroid */
-  border-radius: 8px;
+  border-radius: 10px;
+  border: 4px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  animation: floatUpPhoto linear forwards;
   opacity: 0;
-  animation: floatPhoto linear infinite;
-  user-select: none;
 }
 
-@keyframes floatPhoto {
+@keyframes floatUpPhoto {
   0% {
-    transform: translateY(0) scale(0.8);
+    transform: translateY(0) rotate(-6deg) scale(0.9);
     opacity: 0;
   }
   15% {
-    opacity: 0.85;
+    opacity: 0.92;
   }
   85% {
-    opacity: 0.85;
+    opacity: 0.92;
   }
   100% {
-    transform: translateY(-115vh) scale(1.05);
+    transform: translateY(-120vh) rotate(8deg) scale(1);
     opacity: 0;
   }
 }
 
-/* --- ELEMENTOS FLOTANTES DE FONDO (FLORES, CORAZONES) --- */
+/* Contenedor de flores y corazones flotantes */
 .bg-elements {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  inset: 0;
+  z-index: 3;
   pointer-events: none;
   overflow: hidden;
-  z-index: 3;
 }
 
 .floating-item {
   position: absolute;
-  bottom: -50px;
-  opacity: 0.8;
-  animation: floatUp linear infinite;
-  user-select: none;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+  bottom: -40px;
+  animation: floatUpItem linear forwards;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px rgba(255, 182, 193, 0.6));
 }
 
-@keyframes floatUp {
+@keyframes floatUpItem {
   0% {
-    transform: translateY(0) rotate(0deg) scale(0.8);
+    transform: translateY(0) rotate(0deg);
     opacity: 0;
   }
   20% {
-    opacity: 0.95;
-  }
-  80% {
-    opacity: 0.95;
+    opacity: 0.9;
   }
   100% {
-    transform: translateY(-110vh) rotate(360deg) scale(1.2);
+    transform: translateY(-110vh) rotate(360deg);
     opacity: 0;
   }
 }
 
-/* --- CONTENEDOR DEL SOBRE --- */
+/* --- SOBRE INTERACTIVO --- */
 .envelope-wrapper {
   position: relative;
-  cursor: pointer;
   z-index: 10;
+  cursor: pointer;
+  animation: pulseEnvelope 2.5s infinite ease-in-out;
   transition: transform 0.6s ease;
-  animation: floatEnvelope 3.8s ease-in-out infinite;
 }
 
-@keyframes floatEnvelope {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+@keyframes pulseEnvelope {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 
-/* SOBRE */
 .envelope {
   position: relative;
-  width: 340px;
-  height: 220px;
-  background-color: #8c2642;
-  border-radius: 18px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.25);
+  width: 320px;
+  height: 210px;
+  background: #8e1c38;
+  border-radius: 10px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
 }
 
+/* Solapa superior del sobre */
 .envelope::before {
   content: '';
   position: absolute;
   top: 0;
-  z-index: 4;
-  border-top: 120px solid #a62b4c;
-  border-left: 170px solid transparent;
-  border-right: 170px solid transparent;
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 115px solid #a82444;
   transform-origin: top;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+  transition: transform 0.6s ease, z-index 0.6s ease;
+  z-index: 5;
+  border-radius: 10px 10px 0 0;
 }
 
+/* Bolsillo frontal del sobre */
 .envelope::after {
   content: '';
   position: absolute;
-  z-index: 3;
-  border-left: 170px solid #631b31;
-  border-right: 170px solid #631b31;
-  border-bottom: 115px solid #781e3a;
-  border-top: 105px solid transparent;
-  border-radius: 18px;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid #78152d;
+  border-right: 160px solid #691126;
+  border-bottom: 110px solid #821832;
+  border-top: 100px solid transparent;
+  border-radius: 0 0 10px 10px;
+  z-index: 4;
 }
 
-/* --- CARTA AMPLIADA Y CON CONTROL DE ALTURA --- */
-.letter {
-  position: absolute;
-  bottom: 12px;
-  left: 15px;
-  width: 310px;
-  height: 195px;
-  background: #fdfbf7;
-  border: 1px solid #f3e5ab;
-  text-align: center;
-  padding: 20px 15px 15px 15px;
-  border-radius: 14px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  z-index: 2;
-  transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), height 0.85s, z-index 0.85s;
-  display: flex;
-  flex-direction: column;
-}
-
-.letter h2 {
-  font-family: 'Caveat', cursive;
-  font-size: 2.2rem;
-  color: #8c2642;
-  margin-bottom: 5px;
-  flex-shrink: 0;
-}
-
-/* Contenedor del texto con scroll suave */
-.letter-content {
-  overflow-y: auto;
-  padding-right: 6px;
-  flex-grow: 1;
-}
-
-.letter-content p {
-  font-size: 0.9rem;
-  color: #3a2e33;
-  line-height: 1.6;
-  text-align: left;
-}
-
-/* Barra de desplazamiento estética */
-.letter-content::-webkit-scrollbar {
-  width: 5px;
-}
-
-.letter-content::-webkit-scrollbar-track {
-  background: #f1e4d3;
-  border-radius: 10px;
-}
-
-.letter-content::-webkit-scrollbar-thumb {
-  background: #b8526c;
-  border-radius: 10px;
-}
-
-/* SELLO DORADO DE CORAZÓN */
+/* Sello de corazón */
 .heart-seal {
   position: absolute;
-  top: 100px;
+  top: 50%;
   left: 50%;
-  width: 34px;
-  height: 34px;
-  background: linear-gradient(135deg, #ffd700 0%, #e6a100 100%);
-  z-index: 5;
+  width: 38px;
+  height: 38px;
+  background: #ff4d6d;
   transform: translate(-50%, -50%) rotate(45deg);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  animation: pulseGold 2s infinite;
+  z-index: 6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
@@ -239,37 +168,98 @@ body {
 .heart-seal::after {
   content: '';
   position: absolute;
-  width: 34px;
-  height: 34px;
-  background: linear-gradient(135deg, #ffd700 0%, #e6a100 100%);
+  width: 38px;
+  height: 38px;
+  background: #ff4d6d;
   border-radius: 50%;
 }
 
-.heart-seal::before { left: -17px; }
-.heart-seal::after { top: -17px; }
-
-@keyframes pulseGold {
-  0%, 100% { transform: translate(-50%, -50%) rotate(45deg) scale(1); }
-  50% { transform: translate(-50%, -50%) rotate(45deg) scale(1.15); }
+.heart-seal::before {
+  top: -19px;
+  left: 0;
 }
 
+.heart-seal::after {
+  top: 0;
+  left: -19px;
+}
+
+/* Texto de instrucción */
 .instruction {
   position: absolute;
-  bottom: -48px;
-  width: 100%;
-  text-align: center;
-  color: #fefefe;
-  font-size: 0.95rem;
+  bottom: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 0.92rem;
   font-weight: 500;
-  letter-spacing: 0.8px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-  transition: opacity 0.3s;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 6px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.4s ease;
 }
 
-/* --- ESTADO ABIERTO --- */
+/* --- CARTA INTERIOR --- */
+.letter {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 290px;
+  height: 180px;
+  background: #fffdf9;
+  border-radius: 14px;
+  padding: 20px;
+  z-index: 2;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.letter h2 {
+  font-family: 'Caveat', cursive;
+  font-size: 2.2rem;
+  color: #a82444;
+  text-align: center;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.letter-content {
+  overflow-y: auto;
+  padding-right: 8px;
+  flex: 1;
+}
+
+.letter-content p {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #333;
+  text-align: left;
+}
+
+/* Barra de desplazamiento elegante dentro de la carta */
+.letter-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.letter-content::-webkit-scrollbar-track {
+  background: #f3e8ea;
+  border-radius: 10px;
+}
+
+.letter-content::-webkit-scrollbar-thumb {
+  background: #c94a6a;
+  border-radius: 10px;
+}
+
+/* --- ESTADO ABIERTO (CENTRADO EXACTO) --- */
 .envelope-wrapper.open {
   animation: none;
-  transform: translateY(150px);
+  transform: none;
 }
 
 .envelope-wrapper.open .envelope::before {
@@ -282,14 +272,13 @@ body {
   top: 50%;
   left: 50%;
   bottom: auto;
-  /* Compensa los 150px del sobre para quedar justo en el centro real de la pantalla */
-  transform: translate(-50%, calc(-50% - 150px));
+  transform: translate(-50%, -50%);
   width: min(92vw, 500px);
-  height: 68vh;
-  max-height: 560px;
-  padding: 24px 20px;
-  z-index: 20;
-  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.55);
+  height: 75vh;
+  max-height: 600px;
+  padding: 26px 22px;
+  z-index: 50;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
 }
 
 .envelope-wrapper.open .heart-seal {
